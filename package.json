@@ -4,7 +4,8 @@
   "description": "Este repositório foi criado com o objetivo de fornecer um ambiente dedicado ao estudo e prática dos DDD Patterns, especificamente do módulo \"DDD: Modelagem Tática e Patterns\" oferecido pela plataforma FullCycle.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "npm run tsc -- --noEmit && jest",
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "",

@@ -4,7 +4,7 @@ export default class Customer {
     private _id: string;
     private _name: string = "";
     private _address!: Address;
-    private _active: boolean;
+    private _active: boolean = false;
 
     constructor (id: string, name: string) {
         this._id = id;
@@ -25,16 +25,14 @@ export default class Customer {
         return this._name;
     }
 
+    get id(): string {
+        return this._id;
+    }
+
     isActive(): boolean {
         return this._active;
     }
 
-    // Simplesmente uma forma de mudar o atributo _name sem expressividade, eu posso não utilizar, ele está jogado
-    // set name (name: string) {
-    //     this._name = name;
-    // }
-
-    // Regrar especifica de negócio, intenção que o sistema tem, é o motivo pelo qual o nome existe e o cliente precisa mudar
     changeName (name: string) {
         this._name = name;
     }
