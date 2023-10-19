@@ -1,12 +1,13 @@
 {
-    "jsc": {
+    "jsc" : {
         "parser": {
             "syntax": "typescript",
-            "dynamicImport": true
+            "decorators": true
         },
         "transform": {
-            "legacyDecorators": true,
+            "legacyDecorator": true,
             "decoratorMetadata": true
-        }
+        },
+        "baseUrl": "./src"
     }
 }
