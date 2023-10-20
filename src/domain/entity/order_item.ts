@@ -36,4 +36,8 @@ export default class OrderItem {
     get quantity(): number {
         return this._quantity;
     }
+
+    changeQuantity(quantity: number): void{
+        this._quantity = quantity;
+    }
 }
