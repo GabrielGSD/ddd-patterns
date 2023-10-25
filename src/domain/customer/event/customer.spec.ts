@@ -1,5 +1,5 @@
-import Address from "../../customer/value-object/address";
-import Customer from "../../customer/entity/customer";
+import Address from "../value-object/address";
+import Customer from "../entity/customer";
 import EventDispatcher from "../../@shared/event/event-dispatcher";
 import CustomerAddressChangedEvent from "./customer-address-changed.event";
 import CustomerCreatedEvent from "./customer-created.event";
@@ -153,4 +153,33 @@ describe("Customer events tests", () => {
         expect(spyEventHandlers[1]).toHaveBeenCalled();
     });
    
+    it("should notify change address event", async () => {
+        const customer = new Customer("123", "Customer");
+        const address = new Address("Street", 10, "00000-000", "City");
+        customer.Address = address;
+        const eventDispatcher = new EventDispatcher();
+        const eventHandler = new SendConsoleLogHandler();
+        const spyEventHandler = jest.spyOn(eventHandler, "handle");
+    
+        eventDispatcher.register("CustomerChangeAddressEvent", eventHandler);
+    
+        expect(
+          eventDispatcher.getEventHandlers["CustomerChangeAddressEvent"][0]
+        ).toMatchObject(eventHandler);
+    
+        const newAddress = new Address("Rua 2", 13, "65432-321", "Minas Gerais");
+        customer.changeAddress(newAddress);
+      
+        const event = new CustomerAddressChangedEvent({
+          id: '1',
+          name: 'Customer 1',
+          address: {
+            rua: 'Rua 1',
+            numero: '1',
+          },
+        });
+      
+        eventDispatcher.notify(event);
+        expect(spyEventHandler).toHaveBeenCalled();
+      });
 });
