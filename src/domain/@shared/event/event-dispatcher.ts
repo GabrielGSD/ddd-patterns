@@ -10,17 +10,14 @@ export default class EventDispatcher implements EventDispatcherInterface {
     }
     
     register(eventName: string, eventHandler: EventHandlerInterface): void {
-        console.log(`Registrando o evento: ${ eventName }`)
         if (!this.eventHandlers[eventName]) {
             this.eventHandlers[eventName] = [];
         }
         this.eventHandlers[eventName].push(eventHandler);
-        console.log(`Evento: ${ eventName } registrado com sucesso!`)
     }
     
     notify(event: eventInterface): void {
         const eventName = event.constructor.name;
-        console.log("Notificando ", this.eventHandlers, eventName)
         if (this.eventHandlers[eventName]) {
             this.eventHandlers[eventName].forEach((eventHandler: EventHandlerInterface) => {
                 eventHandler.handle(event);
