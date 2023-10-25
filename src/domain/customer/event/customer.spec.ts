@@ -8,7 +8,6 @@ import SendConsoleLog2Handler from "./handler/send-console-log-2.handler";
 import SendConsoleLogHandler from "./handler/send-console-log.handler";
 
 describe("Customer events tests", () => {
-   
     it("Should register ConsoleLogsEvents when a customer is created", () => {
         const eventDispatcher = new EventDispatcher();
         const eventConsoleLog1Handler = new SendConsoleLog1Handler();
@@ -152,34 +151,27 @@ describe("Customer events tests", () => {
         expect(spyEventHandlers[0]).toHaveBeenCalled();
         expect(spyEventHandlers[1]).toHaveBeenCalled();
     });
-   
+    
     it("should notify change address event", async () => {
-        const customer = new Customer("123", "Customer");
-        const address = new Address("Street", 10, "00000-000", "City");
-        customer.Address = address;
         const eventDispatcher = new EventDispatcher();
         const eventHandler = new SendConsoleLogHandler();
         const spyEventHandler = jest.spyOn(eventHandler, "handle");
-    
-        eventDispatcher.register("CustomerChangeAddressEvent", eventHandler);
-    
+
+        eventDispatcher.register("CustomerAddressChangedEvent", eventHandler);
+
         expect(
-          eventDispatcher.getEventHandlers["CustomerChangeAddressEvent"][0]
+            eventDispatcher.getEventHandlers["CustomerAddressChangedEvent"][0]
         ).toMatchObject(eventHandler);
-    
-        const newAddress = new Address("Rua 2", 13, "65432-321", "Minas Gerais");
-        customer.changeAddress(newAddress);
-      
+
         const event = new CustomerAddressChangedEvent({
-          id: '1',
-          name: 'Customer 1',
-          address: {
-            rua: 'Rua 1',
-            numero: '1',
-          },
+            id: '1',
+            name: 'Customer 1',
+            address: {
+                rua: 'Rua 1',
+                numero: '1'
+            }
         });
-      
         eventDispatcher.notify(event);
         expect(spyEventHandler).toHaveBeenCalled();
-      });
+    });
 });
